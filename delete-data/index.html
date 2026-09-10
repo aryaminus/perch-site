@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perch — Delete my data</title>
+<meta name="description" content="How to stop Perch collecting diagnostics and have anything already sent deleted.">
+<link rel="canonical" href="https://aryaminus.github.io/perch-site/delete-data/">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{--ink:#101014;--muted:#5F5F73;--brand:#0000F2;--ground:#FFFFFF;--rule:#E6E6EF;--code:#F4F4FA}
+@media (prefers-color-scheme:dark){:root{--ink:#F5F5F5;--muted:#C9C9DC;--brand:#4141F8;--ground:#101014;--rule:#2A2A38;--code:#1E1E28}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem 5rem}
+a{color:var(--brand)}
+h1{font-size:1.9rem;line-height:1.2;letter-spacing:-.02em;margin:0 0 .5rem}
+h2{font-size:1.25rem;margin:2.25rem 0 .5rem;letter-spacing:-.01em}
+h3{font-size:1.05rem;margin:1.5rem 0 .35rem}
+p,li{color:var(--ink)}
+li{margin:.3rem 0}
+code{background:var(--code);padding:.12em .35em;border-radius:4px;font-size:.9em;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--code);padding:1rem;border-radius:10px;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{border:1px solid var(--rule);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--code)}
+.scroll{overflow-x:auto;margin:1rem 0}
+nav{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:.92rem;margin-bottom:2.5rem}
+nav a{text-decoration:none}
+footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
+  color:var(--muted);font-size:.86rem}
+.lede{font-size:1.1rem;color:var(--muted);margin-top:0}
+.card{border:1px solid var(--rule);border-radius:12px;padding:1.1rem 1.25rem;margin:1.5rem 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a href="https://aryaminus.github.io/perch-site/">Perch</a>
+  <a href="https://aryaminus.github.io/perch-site/privacy/">Privacy</a>
+  <a href="https://aryaminus.github.io/perch-site/support/">Support</a>
+  <a href="https://aryaminus.github.io/perch-site/delete-data/">Delete my data</a>
+</nav>
+<h1>Delete my Perch data</h1>
+<p class="lede">This page is for <strong>Perch</strong> —
+an independent, open-source client for a self-hosted Hermes Agent. It explains
+how to have your data deleted, what is deleted, and what is kept.</p>
+
+<div class="card">
+<h2 style="margin-top:0">The short version</h2>
+<p><strong>Uninstall Perch.</strong> Everything the app stores lives on your own
+phone, so removing it deletes all of it — immediately and permanently, with
+nothing to request from anyone.</p>
+<p>The only data that ever reaches us is optional crash diagnostics, and only if
+you switched them on. The steps below turn that off and delete what was sent.</p>
+</div>
+
+<h2>Step 1 — stop any further collection</h2>
+<p>In the app: <strong>Content &amp; safety → Crash reports → off</strong>.</p>
+<p>This closes the reporting SDK the moment you tap it. Nothing further leaves
+the device. If you never turned crash reports on, nothing was ever sent and
+there is nothing to delete.</p>
+
+<h2>Step 2 — request deletion of anything already sent</h2>
+<p>Email <a href="mailto:sunim.54@gmail.com?subject=Delete%20my%20Perch%20data">sunim.54@gmail.com</a>
+with the subject <em>Delete my Perch data</em>.</p>
+<p>Perch has no accounts, so there is no username for us to look you up by. Tell
+us roughly <strong>when you used the app and on which platform</strong> and we
+will remove the matching crash reports. Requests are actioned within
+<strong>30 days</strong>.</p>
+
+<h2>What is deleted, and what is kept</h2>
+<div class="scroll"><table>
+<thead><tr><th>Data</th><th>Where it is</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td>Crash logs and performance diagnostics</td><td>Sentry, our processor — only if you opted in</td><td><strong>Deleted on request.</strong> Retained until then, or until Sentry's own retention expires, whichever comes first</td></tr>
+<tr><td>A rotating anonymous installation id</td><td>Sentry, alongside those reports</td><td><strong>Deleted with them.</strong> It is not an advertising id and identifies no person</td></tr>
+<tr><td>Your gateway address and API key</td><td>Your phone's Keychain / Keystore only</td><td><strong>Never sent to us.</strong> Deleted by uninstalling, or by <em>Gateway → Forget</em></td></tr>
+<tr><td>Messages, agent output, attachments, dictation</td><td>Your phone and your own gateway</td><td><strong>Never sent to us.</strong> We have nothing to delete</td></tr>
+<tr><td>Everything your agent holds</td><td>Your own machine</td><td><strong>Yours.</strong> Perch cannot reach it and cannot delete it for you</td></tr>
+</tbody>
+</table></div>
+
+<h2>What we never had in the first place</h2>
+<p>No name, email, phone number or account. No payment details. No location. No
+contacts. No advertising identifier. Perch operates no server, so there is no
+profile of you anywhere to erase — which is why this page is as short as it is.</p>
+<p>The complete account of what does and does not leave your device is in the
+<a href="https://aryaminus.github.io/perch-site/privacy/">privacy policy</a>.</p>
+<footer>
+  Perch is an independent, open-source client for Hermes Agent. Not affiliated
+  with, endorsed by, or supported by Nous Research.<br>
+  Contact: <a href="mailto:sunim.54@gmail.com">sunim.54@gmail.com</a>
+</footer>
+</div>
+</body>
+</html>

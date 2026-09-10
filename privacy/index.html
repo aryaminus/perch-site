@@ -43,6 +43,7 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
   <a href="https://aryaminus.github.io/perch-site/">Perch</a>
   <a href="https://aryaminus.github.io/perch-site/privacy/">Privacy</a>
   <a href="https://aryaminus.github.io/perch-site/support/">Support</a>
+  <a href="https://aryaminus.github.io/perch-site/delete-data/">Delete my data</a>
 </nav>
 <h1>Perch — Privacy Policy</h1>
 <p><strong>Last updated: 2026-09-07</strong></p>
@@ -65,7 +66,8 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
 <div class="scroll"><table><thead><tr><th>Data</th><th>Purpose</th><th>Linked to you</th><th>Used for tracking</th></tr></thead><tbody><tr><td>Crash logs</td><td>App functionality</td><td>No</td><td>No</td></tr><tr><td>Performance diagnostics (frame time, memory)</td><td>App functionality</td><td>No</td><td>No</td></tr><tr><td>A rotating anonymous device ID</td><td>Deduplicating crash reports</td><td>No</td><td>No</td></tr></tbody></table></div>
 <p>The device ID is <strong>not</strong> an IDFA or GAID, is generated locally, and rotates. It is never sent to any Hermes Agent.</p>
 <p><strong>What is scrubbed before anything is sent.</strong> Crash reports are rewritten on-device first: gateway URLs are redacted, because a self-hosted address is often a Tailscale name or a home IP and is therefore identifying, and <code>sendDefaultPii</code> is off. Your messages, your agent's output, file contents, commands and keys are never included.</p>
-<p><strong>Turning it off:</strong> <em>Settings → Diagnostics → Disable</em>, or uninstall.</p>
+<p><strong>Turning it off:</strong> <em>Content &amp; safety → Crash reports → off</em>, or uninstall. The toggle closes the reporting SDK the moment you tap it.</p>
+<p><em>Corrected 2026-09-09: this said "Settings → Diagnostics → Disable". There is no Diagnostics screen and no Disable control — the real ones are named above. A privacy policy that tells you how to stop collection has to name a control that exists.</em></p>
 <h2>What we never collect</h2>
 <p>Not on any setting, not by any code path:</p>
 <ul><li>Personal info (name, email, phone)</li><li>Financial info</li><li>Health info</li><li><strong>Messages</strong> — yours or your agent's</li><li><strong>Photos, videos or files</strong> — we collect none. A photo or file you choose to attach is sent to <strong>your own gateway</strong> and nowhere else, the same way your messages are; Perch operates no server and receives nothing</li><li><strong>Audio</strong> — speech is recognised <strong>on your device</strong>; the recording never leaves the phone and only the text you dictated is sent, to your own gateway</li><li>Contacts or call logs</li><li>Location, precise or approximate</li><li>Web browsing or search history</li><li>Installed apps</li><li>Advertising identifiers — there are no ad SDKs and no ad tracking</li></ul>
@@ -78,7 +80,7 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
 <h2>Children</h2>
 <p>Perch is rated 13+ / Teen. It is a developer tool for people who run their own agent infrastructure, and it is not directed at children.</p>
 <h2>Your rights</h2>
-<p>Because we hold no personal data, there is nothing of yours for us to produce, correct or erase. If you enabled diagnostics and want the crash reports deleted, write to sunim.54@gmail.com and we will remove them from Sentry.</p>
+<p>Because we hold no personal data, there is nothing of yours for us to produce, correct or erase. If you enabled diagnostics and want the crash reports deleted, write to sunim.54@gmail.com and we will remove them from Sentry within 30 days. Step-by-step, with what is deleted and what is kept: <a href="https://aryaminus.github.io/perch-site/delete-data/">delete my data</a>.</p>
 <p>Data held by your <strong>agent</strong> is on your own machine, under your control. Perch cannot reach it and cannot delete it for you.</p>
 <h2>Changes</h2>
 <p>Material changes are listed here, with the date they took effect. The published page is generated from this policy in Perch's source repository, so the two cannot drift apart.</p>
