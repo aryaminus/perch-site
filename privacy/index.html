@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perch — Privacy Policy</title>
+<meta name="description" content="Perch operates no servers. What stays on your device, what goes to your own gateway, and the one thing that is optional.">
+<link rel="canonical" href="https://aryaminus.github.io/perch-site/privacy/">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{--ink:#101014;--muted:#5F5F73;--brand:#0000F2;--ground:#FFFFFF;--rule:#E6E6EF;--code:#F4F4FA}
+@media (prefers-color-scheme:dark){:root{--ink:#F5F5F5;--muted:#C9C9DC;--brand:#4141F8;--ground:#101014;--rule:#2A2A38;--code:#1E1E28}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem 5rem}
+a{color:var(--brand)}
+h1{font-size:1.9rem;line-height:1.2;letter-spacing:-.02em;margin:0 0 .5rem}
+h2{font-size:1.25rem;margin:2.25rem 0 .5rem;letter-spacing:-.01em}
+h3{font-size:1.05rem;margin:1.5rem 0 .35rem}
+p,li{color:var(--ink)}
+li{margin:.3rem 0}
+code{background:var(--code);padding:.12em .35em;border-radius:4px;font-size:.9em;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--code);padding:1rem;border-radius:10px;overflow-x:auto}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{border:1px solid var(--rule);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--code)}
+.scroll{overflow-x:auto;margin:1rem 0}
+nav{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:.92rem;margin-bottom:2.5rem}
+nav a{text-decoration:none}
+footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
+  color:var(--muted);font-size:.86rem}
+.lede{font-size:1.1rem;color:var(--muted);margin-top:0}
+.card{border:1px solid var(--rule);border-radius:12px;padding:1.1rem 1.25rem;margin:1.5rem 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a href="https://aryaminus.github.io/perch-site/">Perch</a>
+  <a href="https://aryaminus.github.io/perch-site/privacy/">Privacy</a>
+  <a href="https://aryaminus.github.io/perch-site/support/">Support</a>
+</nav>
+<h1>Perch — Privacy Policy</h1>
+<p><strong>Last updated: 2026-09-07</strong></p>
+<p>Perch is an independent, open-source client for <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a>. It is not affiliated with, endorsed by, or supported by Nous Research.</p>
+<p>This document is the third of three forms that must say the same thing. The other two are <code>docs/store/play-data-safety-answers.json</code> (Google Play Data Safety) and the iOS privacy manifest (<code>ios.privacyManifests</code> in <code>app.config.ts</code>) (Apple privacy manifest and nutrition labels). If you find this page disagreeing with either of them, the disagreement is the bug — please <a href="https://aryaminus.github.io/perch-site/support/">tell us</a>.</p>
+<h2>The short version</h2>
+<p><strong>Perch operates no servers.</strong> There is no relay, no device registry, no account, and no backend of ours anywhere in the path. Everything you type goes to the Hermes Agent <em>you</em> run, at an address <em>you</em> supply, using a key <em>you</em> hold. We never see it, because there is nowhere for us to see it from.</p>
+<p>The only data that ever leaves your phone to anyone but your own gateway is optional crash and performance diagnostics, and only if you switch them on.</p>
+<h2>Who we are</h2>
+<p>Perch is maintained by the contributors to the Perch repository. Contact: <strong>sunim.54@gmail.com</strong>, or the <a href="https://aryaminus.github.io/perch-site/support/">support page</a> for anything that can be public.</p>
+<h2>What stays on your device</h2>
+<p>These never leave your phone, and we have no way to read them:</p>
+<ul><li><strong>Your gateway address and API key</strong> — stored in the iOS Keychain / Android Keystore, never in app storage, never in logs, never in a crash report.</li><li><strong>API keys for named agent profiles</strong> ("bots") — same storage, same rules.</li><li><strong>Composer drafts, scroll positions, read markers, mutes and theme.</strong></li><li><strong>Your queued sends</strong> ("outbox") while you are offline.</li><li><strong>Which messages you reported and which agent profiles you blocked.</strong></li></ul>
+<p>Uninstalling Perch deletes all of it. So does <em>Settings → Gateway → Forget</em>, which additionally clears the Keychain entries.</p>
+<h2>What goes to your own gateway</h2>
+<p>What you type, and what you approve or deny. It goes to the address you entered and nowhere else. Your Hermes Agent may then send it on to whichever model providers <strong>you</strong> configured on <strong>your</strong> machine — those are your arrangements with those providers, not ours. Perch shows you this before your first message and will not send until you accept it.</p>
+<p><strong>Model provider keys never touch this app.</strong> They live on your gateway.</p>
+<h2>What we collect, only if you turn it on</h2>
+<p>Diagnostics are <strong>off by default</strong> and asked for explicitly at first run. If you enable them, crash and performance data goes to <a href="https://sentry.io">Sentry</a>:</p>
+<div class="scroll"><table><thead><tr><th>Data</th><th>Purpose</th><th>Linked to you</th><th>Used for tracking</th></tr></thead><tbody><tr><td>Crash logs</td><td>App functionality</td><td>No</td><td>No</td></tr><tr><td>Performance diagnostics (frame time, memory)</td><td>App functionality</td><td>No</td><td>No</td></tr><tr><td>A rotating anonymous device ID</td><td>Deduplicating crash reports</td><td>No</td><td>No</td></tr></tbody></table></div>
+<p>The device ID is <strong>not</strong> an IDFA or GAID, is generated locally, and rotates. It is never sent to any Hermes Agent.</p>
+<p><strong>What is scrubbed before anything is sent.</strong> Crash reports are rewritten on-device first: gateway URLs are redacted, because a self-hosted address is often a Tailscale name or a home IP and is therefore identifying, and <code>sendDefaultPii</code> is off. Your messages, your agent's output, file contents, commands and keys are never included.</p>
+<p><strong>Turning it off:</strong> <em>Settings → Diagnostics → Disable</em>, or uninstall.</p>
+<h2>What we never collect</h2>
+<p>Not on any setting, not by any code path:</p>
+<ul><li>Personal info (name, email, phone)</li><li>Financial info</li><li>Health info</li><li><strong>Messages</strong> — yours or your agent's</li><li><strong>Photos, videos or files</strong> — we collect none. A photo or file you choose to attach is sent to <strong>your own gateway</strong> and nowhere else, the same way your messages are; Perch operates no server and receives nothing</li><li><strong>Audio</strong> — speech is recognised <strong>on your device</strong>; the recording never leaves the phone and only the text you dictated is sent, to your own gateway</li><li>Contacts or call logs</li><li>Location, precise or approximate</li><li>Web browsing or search history</li><li>Installed apps</li><li>Advertising identifiers — there are no ad SDKs and no ad tracking</li></ul>
+<h2>What we share</h2>
+<p><strong>Nothing.</strong> No data is shared with third parties. The optional diagnostics above go to Sentry as our processor and to nobody else.</p>
+<h2>Notifications</h2>
+<p>Perch has no push infrastructure, because we run no servers. If you want to be told about approvals while the app is closed, you point <strong>your</strong> gateway at an <a href="https://ntfy.sh">ntfy</a> topic. If you use the public ntfy.sh, that server sees your notification text; if you self-host ntfy, nobody does. Perch shows you this trade-off on the setup screen. Either way the traffic is between your gateway and your ntfy — never through us.</p>
+<h2>Content reports</h2>
+<p>Reporting a message opens <strong>your own mail client</strong>, pre-filled and addressed to sunim.54@gmail.com, showing you the exact text first. Perch transmits nothing itself. The report is only sent if you send the email. The message is hidden on your device either way, and every hide is reversible from <em>Content &amp; safety</em>.</p>
+<h2>Children</h2>
+<p>Perch is rated 13+ / Teen. It is a developer tool for people who run their own agent infrastructure, and it is not directed at children.</p>
+<h2>Your rights</h2>
+<p>Because we hold no personal data, there is nothing of yours for us to produce, correct or erase. If you enabled diagnostics and want the crash reports deleted, write to sunim.54@gmail.com and we will remove them from Sentry.</p>
+<p>Data held by your <strong>agent</strong> is on your own machine, under your control. Perch cannot reach it and cannot delete it for you.</p>
+<h2>Changes</h2>
+<p>Material changes will be noted here with a new date. This page is generated from the policy in Perch's source repository, so the two cannot drift; once that repository is published, its commit history shows exactly what changed and when.</p>
+<p>Corrected 2026-09-09: this paragraph used to say the history <em>is</em> public. It is not yet, and a privacy policy is the last place to describe a plan as a fact.</p>
+<footer>
+  Perch is an independent, open-source client for Hermes Agent. Not affiliated
+  with, endorsed by, or supported by Nous Research.<br>
+  Contact: <a href="mailto:sunim.54@gmail.com">sunim.54@gmail.com</a>
+</footer>
+</div>
+</body>
+</html>
