@@ -50,7 +50,7 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
 <p class="lede">Perch is one of seven clients for a self-hosted Hermes Agent.
 Below: what it measures at, how it lines up against each of the others on every
 axis that matters for a phone, and where it is behind. Perch numbers are read
-off measurement artefacts; competitor cells are from each project's README as of
+off measurement artefacts. Competitor cells are from each project's README as of
 2026-09-10.</p>
 
 <h2>Measured</h2>
@@ -68,9 +68,9 @@ off measurement artefacts; competitor cells are from each project's README as of
 <tr><td>Foreground service while following a run</td><td>self-stops at <strong>30 min</strong>, one ongoing notification with Stop</td><td>Android's dataSync cap is 6 h rolling</td></tr>
 <tr><td>Polling while a run is unsettled</td><td>every <strong>2.5 s</strong>, foreground only; idle transcript re-read every 30 s; both stop on background</td><td>—</td></tr>
 <tr><td>Stream liveness</td><td>declared dead after <strong>2 missed keepalives</strong> (60 s); reconnect backoff 0.5 → 30 s with 20 % jitter, 6 attempts</td><td>—</td></tr>
-<tr><td>Third-party runtime dependencies</td><td><strong>4</strong> (Sentry, marked, MMKV, safe-area) + 20 Expo modules · <strong>0</strong> icon fonts · 63 KB bundled assets</td><td>own gate: 8 / 22</td></tr>
+<tr><td>Third-party runtime dependencies</td><td><strong>4</strong> (Sentry, marked, MMKV, safe-area) + 20 Expo modules; <strong>0</strong> icon fonts; 63 KB bundled assets</td><td>own gate: 8 / 22</td></tr>
 <tr><td>Permissions in the shipped bundle</td><td><strong>27</strong>, all reviewed; <strong>none</strong> for storage, media, location, contacts or advertising</td><td>read from the AAB's merged manifest</td></tr>
-<tr><td>Credentials in the JavaScript heap</td><td><strong>0</strong> — keys live in the hardware keystore</td><td>hard zero, scanned every build</td></tr>
+<tr><td>Credentials in the JavaScript heap</td><td><strong>0</strong>; keys live in the hardware keystore</td><td>hard zero, scanned every build</td></tr>
 <tr><td>Tests</td><td><strong>1,054</strong> unit + contract (90.9 % core coverage, 69 s) · <strong>26</strong> device flows · live-gateway suite · visual regression</td><td>—</td></tr>
 <tr><td>Touch targets · body contrast · reduced motion</td><td><strong>44 dp</strong> · <strong>5.77 : 1</strong> · <strong>100 %</strong> honoured</td><td>WCAG AA is 4.5 : 1</td></tr>
 <tr><td>Strings · locales · themes</td><td><strong>416</strong> · English + Simplified Chinese · light, dark, OLED</td><td>—</td></tr>
@@ -79,7 +79,7 @@ off measurement artefacts; competitor cells are from each project's README as of
 </table></div>
 <p>Startup, memory and reconcile were taken on an API 36 emulator, which is
 where CI can take them. Background traffic was measured by routing the device
-through a proxy that counts request lines and open sockets, with the counters
+through a proxy that counts request lines and open sockets. The counters were
 reset only after the app was off-screen.</p>
 
 <h2>Against every other client</h2>
@@ -97,17 +97,17 @@ and Perch. <em>hermes-android</em> is the strongest Android alternative;
 <tr><td>Auth</td><td>key in hardware keystore · QR pairing · pairing approvals</td><td>API key</td><td>basic auth (admin/hermes default)</td><td>basic · OAuth · token, Keychain</td><td>password</td><td>Tailscale identity header</td><td>token stored locally</td></tr>
 <tr><td>Streaming</td><td>✓ SSE, frames as they arrive</td><td>✓ SSE</td><td>✓ WebSocket</td><td>✓</td><td>✓</td><td>✓ WS</td><td>✓ (desktop renderer)</td></tr>
 <tr><td>Approvals from the phone</td><td>✓ two-tap · risk-ordered inbox · stale decisions named</td><td>✓</td><td>—</td><td>✓</td><td>—</td><td>✓</td><td>not documented</td></tr>
-<tr><td>Approval survives a cold start</td><td><strong>✓</strong> recovered from the run id</td><td>partial — "durable turn recovery"</td><td>—</td><td>—</td><td>—</td><td><strong>—</strong> lost if phone asleep, by its own README</td><td>—</td></tr>
+<tr><td>Approval survives a cold start</td><td><strong>✓</strong> recovered from the run id</td><td>partial ("durable turn recovery")</td><td>—</td><td>—</td><td>—</td><td><strong>no</strong>: lost if the phone is asleep, by its own README</td><td>—</td></tr>
 <tr><td>Notified while the app is closed</td><td>✓ your own ntfy topic · 30-min follow service · Android 16 Live Updates</td><td>✓ background-turn notifications</td><td>foreground-service chat notifications</td><td>✓ push (approvals, clarifications, errors)</td><td>—</td><td>✓ push, 5 types</td><td>—</td></tr>
 <tr><td>Offline</td><td><strong>✓</strong> cached transcripts · replaying outbox · idempotent resend</td><td>—</td><td>local history DB</td><td>state restore after backgrounding</td><td>cached sessions</td><td>—</td><td>—</td></tr>
-<tr><td>Stop · steer · queue mid-run</td><td><strong>✓ ✓ ✓</strong> — queue holds after stop, send-now stops first</td><td>stop</td><td>—</td><td>—</td><td>stop · steer</td><td>—</td><td>—</td></tr>
+<tr><td>Stop · steer · queue mid-run</td><td><strong>✓ ✓ ✓</strong>; the queue holds after a stop, and send-now stops first</td><td>stop</td><td>—</td><td>—</td><td>stop · steer</td><td>—</td><td>—</td></tr>
 <tr><td>Fork a conversation</td><td>✓</td><td>✓ branch</td><td>—</td><td>✓</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Search</td><td>✓ server FTS5 + instant local filter</td><td>✓ on-device FTS5 + AI</td><td>—</td><td>✓</td><td>✓</td><td>✓</td><td>—</td></tr>
 <tr><td>Routines / cron</td><td>✓ create · edit · pause · run-now · delete</td><td>✓ CRUD</td><td>✓</td><td>—</td><td>✓</td><td>✓ pause · resume · run</td><td>—</td></tr>
 <tr><td>Skills</td><td>✓ browse + toggle</td><td>browse</td><td>✓ manage</td><td>slash commands</td><td>browse</td><td>—</td><td>—</td></tr>
 <tr><td>Bots / profiles</td><td>✓ roster · <strong>create on the gateway</strong> · per-bot key</td><td>—</td><td>✓ manage</td><td>✓ multiple</td><td>select</td><td>✓</td><td>select</td></tr>
 <tr><td>Attachments</td><td>photo · PDF · text, 8 MiB, <em>dashboard only</em></td><td><strong>10 files × 16 MiB</strong></td><td>—</td><td>✓ photos · PDF · camera</td><td>✓</td><td>—</td><td>—</td></tr>
-<tr><td>Voice</td><td>push-to-talk, <strong>on-device only</strong>; audio never leaves the phone</td><td>dictation + <strong>read-aloud</strong>; where audio goes unstated</td><td>—</td><td>dictation, transcribed by the agent</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Voice</td><td>push-to-talk, <strong>on-device only</strong>; audio never leaves the phone</td><td>dictation and <strong>read-aloud</strong>; where audio goes is not stated</td><td>—</td><td>dictation, transcribed by the agent</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Usage &amp; context</td><td>tokens · cost · cache reads · context % with a real denominator</td><td>—</td><td>analytics &amp; billing</td><td>✓ tokens · % · cost</td><td>read-only analytics</td><td>—</td><td>—</td></tr>
 <tr><td>Tablet</td><td>✓ two-pane ≥ 820 dp</td><td>✓</td><td>—</td><td>✓ iPad sidebar</td><td>—</td><td>—</td><td>master-detail</td></tr>
 <tr><td>Accessibility gated</td><td><strong>✓</strong> 44 dp · 130 % type · RTL · reduced motion</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
@@ -119,10 +119,10 @@ and Perch. <em>hermes-android</em> is the strongest Android alternative;
 </tbody>
 </table></div>
 <p>And the incumbent nobody lists: <strong>Telegram</strong>, through the
-gateway's own adapter. It wins on push — instant, everywhere, no setup — and
-loses on everything an approval needs: the exact command on screen, a
-fail-closed deadline shown as a countdown, a two-tap confirm, and a record of
-what was decided. Perch treats that bar as the one to clear.</p>
+gateway's own adapter. It wins on push: instant, everywhere, no setup. It loses
+on everything an approval needs: the exact command on screen, a fail-closed
+deadline shown as a countdown, a two-tap confirm, and a record of what was
+decided. That is the bar Perch sets itself.</p>
 
 <h2>Where Perch is behind</h2>
 <ul>
@@ -130,24 +130,23 @@ what was decided. Perch treats that bar as the one to clear.</p>
   <li><strong>Read-aloud:</strong> hermes-android speaks replies. Perch has no text-to-speech.</li>
   <li><strong>App Store:</strong> Hermex is on it; goncharik is on TestFlight. Perch's iOS build runs on the simulator and ships in the release; a signed IPA waits on a developer membership.</li>
   <li><strong>Adoption:</strong> Hermex has 1.3k stars. Perch is in its first closed test.</li>
-  <li><strong>Extra dashboard surfaces:</strong> Hy4ri shows live logs, processes, webhooks and a kanban; hermes-android has a memory viewer, projects and encrypted backup. Perch deliberately builds none of these.</li>
+  <li><strong>Extra dashboard surfaces:</strong> Hy4ri shows live logs, processes, webhooks and a kanban; hermes-android has a memory viewer, projects and encrypted backup. Perch builds none of these; they are desktop-shaped work and the phone is not where it happens.</li>
   <li><strong>OAuth to the dashboard:</strong> goncharik supports it. Perch does not.</li>
   <li><strong>Material You:</strong> Hy4ri picks up the wallpaper palette. Perch has three fixed schemes.</li>
 </ul>
 
 <h2>Not measured yet</h2>
-<p>Budgets exist for these; the numbers do not, and the page will not pretend
-otherwise. <strong>Battery per hour of streaming</strong> and <strong>frame
-drops during a stream</strong> need a physical device — an emulator renders
-through the host GPU and answers dishonestly. <strong>Crash-free sessions and
+<p>Budgets exist for these; the numbers do not. <strong>Battery per hour of
+streaming</strong> and <strong>frame drops during a stream</strong> need a
+physical device, because an emulator renders through the host GPU. <strong>Crash-free sessions and
 ANR rate</strong> need real users, and the gates are set at 99.7 % and 0.2 %
 against Play's bad-behaviour lines of 98.91 % and 0.47 %. <strong>Memory at
-10,000 messages</strong> is bounded by design — 1,000 rendered rows, 50 per
-page — and unmeasured.</p>
+10,000 messages</strong> is bounded (1,000 rendered rows, 50 per page) and
+unmeasured.</p>
 
 <h2>What it will not do</h2>
 <ul>
-  <li><strong>Run a relay.</strong> Some clients route <em>phone → their cloud → your agent</em> and delete connection setup entirely. That is a real convenience bought with a server you do not run. Perch runs none, and owes you a legible tunnel instead.</li>
+  <li><strong>Run a relay.</strong> Some clients route <em>phone → their cloud → your agent</em> and delete connection setup entirely. It is convenient, and it is bought with a server you do not run. Perch runs none, and owes you a legible tunnel instead.</li>
   <li><strong>Invent a message field.</strong> An attached file is never rendered back in the transcript, because no message the gateway returns carries one.</li>
   <li><strong>Install a private CA.</strong> Named in the connect flow rather than failing obscurely.</li>
   <li><strong>Push multi-device.</strong> Another device's changes arrive by a 30 s re-read, not an event.</li>
