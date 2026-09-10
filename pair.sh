@@ -6,13 +6,13 @@
 # your PHONE can actually reach, checks the gateway really answers there, and
 # prints a QR to scan (or a link to type).
 #
-#   ./scripts/pair.sh                      # figure everything out
-#   ./scripts/pair.sh --url https://hermes.example.com   # tunnel / cloud / reverse proxy
-#   ./scripts/pair.sh --lan                # force the LAN address
-#   ./scripts/pair.sh --tailscale          # force the tailnet address
-#   ./scripts/pair.sh --local              # loopback (emulator on THIS machine only)
-#   ./scripts/pair.sh --no-dashboard       # gateway only
-#   ./scripts/pair.sh --fix                # write missing keys to ~/.hermes/.env (asks first)
+#   bash pair.sh                      # figure everything out
+#   bash pair.sh --url https://hermes.example.com   # tunnel / cloud / reverse proxy
+#   bash pair.sh --lan                # force the LAN address
+#   bash pair.sh --tailscale          # force the tailnet address
+#   bash pair.sh --local              # loopback (emulator on THIS machine only)
+#   bash pair.sh --no-dashboard       # gateway only
+#   bash pair.sh --fix                # write missing keys to ~/.hermes/.env (asks first)
 #
 # ⚠️ THE QR IS A CREDENTIAL — and it reaches further than most people expect.
 # The gateway API key is full control of an agent with a shell. If a dashboard
@@ -65,7 +65,7 @@ if ! command -v hermes >/dev/null 2>&1; then
   echo "     Install: https://github.com/NousResearch/hermes-agent"
   echo
   echo "     Already running it on ANOTHER machine? Run this script there,"
-  echo "     or pair by hand with:  ./scripts/pair.sh --url https://that-host:8642"
+  echo "     or pair by hand with:  bash pair.sh --url https://that-host:8642"
   exit 1
 fi
 ok "hermes $(hermes --version 2>&1 | head -1 | sed -E 's/^Hermes Agent //')"

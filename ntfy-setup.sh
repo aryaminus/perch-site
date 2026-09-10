@@ -8,11 +8,11 @@
 # NTFY_SERVER_URL, NTFY_TOKEN), and test-publishes so you know it works
 # before you restart anything.
 #
-#   ./scripts/ntfy-setup.sh                        # ntfy.sh (works anywhere; they see metadata)
-#   ./scripts/ntfy-setup.sh --server https://n.h.example.com   # your own server
-#   ./scripts/ntfy-setup.sh --server http://192.168.1.50:8080  # LAN-only (warns: stops when you leave)
-#   ./scripts/ntfy-setup.sh --token <tok>          # server needs auth
-#   ./scripts/ntfy-setup.sh --topic <existing>     # reuse a topic you already made
+#   bash ntfy-setup.sh                        # ntfy.sh (works anywhere; they see metadata)
+#   bash ntfy-setup.sh --server https://n.h.example.com   # your own server
+#   bash ntfy-setup.sh --server http://192.168.1.50:8080  # LAN-only (warns: stops when you leave)
+#   bash ntfy-setup.sh --token <tok>          # server needs auth
+#   bash ntfy-setup.sh --topic <existing>     # reuse a topic you already made
 #
 # This script appends NOTHING. It prints; you paste. Your agent's config is yours.
 set -euo pipefail
@@ -85,7 +85,7 @@ echo "3. Restart the gateway so it picks up the platform and the plugin:"
 echo "   hermes gateway restart"
 echo "4. Subscribe this phone to topic '${TOPIC}' in the ntfy app"
 echo "   (or enter it on Perch's Notify screen to get the same config there)."
-echo "   Prove it end to end with scripts/ntfy-delivery-test.sh."
+echo "   Then raise an approval and watch the topic — that is the real proof."
 echo
 echo -n "Sending a test notification… "
 AUTH=()

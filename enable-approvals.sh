@@ -34,9 +34,9 @@
 # Every change makes the agent MORE cautious, never less. The original config is
 # backed up first and the script prints how to revert.
 #
-#   ./scripts/enable-approvals.sh                 # show what would change
-#   ./scripts/enable-approvals.sh --apply         # write it
-#   ./scripts/enable-approvals.sh --apply --multi-profile
+#   bash enable-approvals.sh                 # show what would change
+#   bash enable-approvals.sh --apply         # write it
+#   bash enable-approvals.sh --apply --multi-profile
 set -euo pipefail
 
 HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"

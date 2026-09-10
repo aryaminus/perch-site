@@ -15,11 +15,11 @@
 # for you and why every step below is printed before it happens and reversible
 # after.
 #
-#   scripts/install-approval-bridge.sh                    # ntfy.sh, fresh topic
-#   scripts/install-approval-bridge.sh --server https://ntfy.example.com
-#   scripts/install-approval-bridge.sh --topic my-existing-topic --token tk_…
-#   scripts/install-approval-bridge.sh --uninstall
-#   scripts/install-approval-bridge.sh --dry-run          # print, change nothing
+#   bash install-approval-bridge.sh                    # ntfy.sh, fresh topic
+#   bash install-approval-bridge.sh --server https://ntfy.example.com
+#   bash install-approval-bridge.sh --topic my-existing-topic --token tk_…
+#   bash install-approval-bridge.sh --uninstall
+#   bash install-approval-bridge.sh --dry-run          # print, change nothing
 #
 # WHAT IT SENDS. A title, "Open Perch to review the command and approve or deny
 # it", and a `Click` to `perch://run/<run_id>`. **Never the command text** — the
@@ -111,6 +111,15 @@ fi
 
 # A topic name IS the credential: ntfy has no other access control by default,
 # so anyone who learns it can read your notices. 20 hex chars, not a word.
+#
+# Resolve it BEFORE the header prints. An existing NTFY_TOPIC in .env wins (step
+# 3 has always honoured it), but the header used to print a freshly generated
+# topic that step 3 then discarded — so the summary at the top named one topic
+# and the install used another. Two different secrets on one screen, and the
+# user has no way to know which one to subscribe to.
+if [[ -z "$TOPIC" && -f "$HERMES_HOME/.env" ]] && grep -qE "^NTFY_TOPIC=" "$HERMES_HOME/.env"; then
+  TOPIC="$(grep -E '^NTFY_TOPIC=' "$HERMES_HOME/.env" | head -1 | cut -d= -f2-)"
+fi
 [[ -n "$TOPIC" ]] || TOPIC="perch-$(openssl rand -hex 10)"
 
 say "Perch · approval bridge (ADR-023)"
@@ -192,5 +201,13 @@ say
 say "Done. Now:"
 say "  · subscribe this phone to '${TOPIC:0:10}…' in the ntfy app, or paste the"
 say "    same topic into Perch's Notify screen"
-say "  · prove it end to end:  scripts/ntfy-delivery-test.sh"
-say "  · undo any time:        scripts/install-approval-bridge.sh --uninstall"
+# SELF, not a repo path. Downloaded on its own — the way the app tells people
+# to get it — "scripts/install-approval-bridge.sh --uninstall" names a file that
+# is not there, and telling someone the undo command is one they cannot run is
+# worse than saying nothing.
+say "  · undo any time:        bash $(basename "${BASH_SOURCE[0]}") --uninstall"
+if [[ -d "$LOCAL_PLUGIN" ]]; then
+  say "  · prove it end to end:  scripts/ntfy-delivery-test.sh"  # repo-path-ok: this branch only runs from a clone
+else
+  say "  · to check it works: raise an approval and watch the topic in the ntfy app"
+fi
