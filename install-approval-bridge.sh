@@ -97,6 +97,17 @@ did() { if [[ $DRY -eq 1 ]]; then say "   (dry run — nothing written)"; else s
 
 [[ -d "$HERMES_HOME" ]] || { echo "No Hermes home at $HERMES_HOME. Install Hermes Agent first: https://github.com/NousResearch/hermes-agent" >&2; exit 1; }
 
+# Needed to fetch the plugin when there is no local copy. Checked up front
+# rather than at the download, so the message arrives before anything is
+# touched — and only when it is actually needed.
+if [[ ! -d "$LOCAL_PLUGIN" ]] && ! command -v curl >/dev/null 2>&1; then
+  echo "This script needs 'curl' to download the plugin ($SITE/perch-approvals)." >&2
+  echo "Install curl, or fetch these two files by hand into $HERMES_HOME/plugins/perch-approvals/:" >&2
+  echo "  $SITE/perch-approvals/plugin.yaml" >&2
+  echo "  $SITE/perch-approvals/__init__.py" >&2
+  exit 1
+fi
+
 if [[ $UNINSTALL -eq 1 ]]; then
   say "Perch · removing the approval bridge"
   run rm -rf "$HERMES_HOME/plugins/perch-approvals"
@@ -120,7 +131,20 @@ fi
 if [[ -z "$TOPIC" && -f "$HERMES_HOME/.env" ]] && grep -qE "^NTFY_TOPIC=" "$HERMES_HOME/.env"; then
   TOPIC="$(grep -E '^NTFY_TOPIC=' "$HERMES_HOME/.env" | head -1 | cut -d= -f2-)"
 fi
-[[ -n "$TOPIC" ]] || TOPIC="perch-$(openssl rand -hex 10)"
+# openssl is the usual source of randomness here and is not guaranteed to be
+# installed. /dev/urandom is, on every system this script can run on, so the
+# fallback is the portable one rather than an error — a missing openssl should
+# not stop an install over twenty random characters.
+if [[ -z "$TOPIC" ]]; then
+  if command -v openssl >/dev/null 2>&1; then
+    TOPIC="perch-$(openssl rand -hex 10)"
+  else
+    # Bounded read, and `cut` rather than a second `head` — see ntfy-setup.sh:
+    # the `tr < /dev/urandom | head` spelling dies of SIGPIPE under pipefail.
+    TOPIC="perch-$(head -c 1024 /dev/urandom | LC_ALL=C tr -dc 'a-f0-9' | cut -c1-20)"
+  fi
+fi
+[[ ${#TOPIC} -ge 12 ]] || { echo "Could not generate a topic — pass one with --topic." >&2; exit 1; }
 
 say "Perch · approval bridge (ADR-023)"
 say "  gateway home : $HERMES_HOME"

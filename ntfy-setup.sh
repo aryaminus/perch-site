@@ -33,7 +33,22 @@ done
 
 if [ -z "$TOPIC" ]; then
   # Same shape as the app's suggestTopic: 20 chars, no l/1/0/o.
-  TOPIC="perch-$(LC_ALL=C tr -dc 'abcdefghijkmnopqrstuvwxyz23456789' < /dev/urandom | head -c 20)"
+  #
+  # ⚠️ NOT `tr … < /dev/urandom | head -c 20`. That is the obvious spelling and
+  # it made this entire script a no-op: /dev/urandom never ends, so `head`
+  # closes the pipe, `tr` dies of SIGPIPE, and `set -o pipefail` turns exit 141
+  # into a fatal error — after the topic was generated and before a single line
+  # was printed. The script exited 141 with NO OUTPUT AT ALL. Measured
+  # 2026-09-09; it had never worked.
+  #
+  # `head` bounds the source instead, and `cut` reads its input to the end, so
+  # nothing closes a pipe early. 1024 random bytes through a 33-character
+  # alphabet yields ~130, which is comfortably more than the 20 wanted.
+  TOPIC="perch-$(head -c 1024 /dev/urandom | LC_ALL=C tr -dc 'abcdefghijkmnopqrstuvwxyz23456789' | cut -c1-20)"
+fi
+if [ "${#TOPIC}" -lt 20 ]; then
+  echo "Could not generate a topic from /dev/urandom. Pass one with --topic." >&2
+  exit 1
 fi
 
 case "$SERVER" in
@@ -87,6 +102,21 @@ echo "4. Subscribe this phone to topic '${TOPIC}' in the ntfy app"
 echo "   (or enter it on Perch's Notify screen to get the same config there)."
 echo "   Then raise an approval and watch the topic — that is the real proof."
 echo
+# curl is what publishes the test, and it was unguarded: a machine without it
+# took the `else` branch below and was told "the server did not accept the
+# publish — check the URL, the token, and whether the server is reachable".
+# Every one of those is wrong. Diagnosing the wrong thing is worse than saying
+# nothing, because the reader goes and changes something that was fine.
+if ! command -v curl >/dev/null 2>&1; then
+  echo "Everything above is correct and ready to paste."
+  echo
+  echo "Skipping the test publish: 'curl' is not on this machine, so there is no"
+  echo "way to send one from here. Install curl and re-run to test delivery, or"
+  echo "publish by hand from anywhere:"
+  echo "   curl -d 'test' ${SERVER}/${TOPIC}"
+  exit 0
+fi
+
 echo -n "Sending a test notification… "
 AUTH=()
 if [ -n "$TOKEN" ]; then AUTH=(-H "Authorization: Bearer ${TOKEN}"); fi

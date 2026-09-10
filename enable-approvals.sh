@@ -61,6 +61,38 @@ info() { printf '  \033[36mi\033[0m %s\n' "$1"; }
 echo "Perch · make your agent ask before it acts"
 echo
 
+# ── what this script needs, checked before it needs it ──────────────────────
+#
+# Every read and write below goes through Python and PyYAML, and neither was
+# checked. Without python3 this printed `line 66: python3: command not found`
+# and stopped; with python3 but no PyYAML it printed a raw ImportError
+# traceback. Both measured. Neither tells the reader what to install, and the
+# second looks like the script is broken rather than the machine is missing a
+# package.
+#
+# Checked here, once, before anything is read or written — so the failure is a
+# sentence instead of a stack trace, and it happens before the config has been
+# touched rather than halfway through.
+need() {
+  command -v "$1" >/dev/null 2>&1 && return 0
+  echo "This script needs '$1', which is not on your PATH." >&2
+  echo "$2" >&2
+  exit 1
+}
+need python3 "  Hermes Agent is a Python program, so the machine running it has one —
+  make sure you are on that machine, or install Python 3:
+    macOS:  brew install python3   (or: xcode-select --install)
+    Debian/Ubuntu:  sudo apt install python3
+    Fedora:  sudo dnf install python3"
+if ! python3 -c 'import yaml' >/dev/null 2>&1; then
+  echo "This script needs PyYAML, and this python3 does not have it." >&2
+  echo "  $(command -v python3)" >&2
+  echo "  Install it:  python3 -m pip install --user pyyaml" >&2
+  echo "  Or run this with the Python that Hermes itself uses, which already has it:" >&2
+  echo "    PATH=\"\$HOME/.hermes/venv/bin:\$PATH\" bash enable-approvals.sh" >&2
+  exit 1
+fi
+
 # Report the CURRENT state first: an operator should see what they have before
 # being told what to change.
 python3 - "$CONFIG" <<'PY'

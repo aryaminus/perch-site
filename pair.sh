@@ -79,7 +79,7 @@ API_KEY="${HERMES_API_KEY:-$(env_get API_SERVER_KEY)}"
 # is the single most common reason "nothing is listening on 8642".
 if [[ -z "$API_KEY" ]]; then
   bad "API_SERVER_KEY is not set — the API server stays off without it."
-  GEN="$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 43)"
+  GEN="$(head -c 64 /dev/urandom | base64 | tr -d '/+=\n' | cut -c1-43)"
   if [[ "$FIX" == "1" ]]; then
     echo
     echo "  Add to $ENV_FILE:"
@@ -266,7 +266,7 @@ if [[ "$WANT_DASHBOARD" == "1" ]]; then
         warn "found at $CAND, but its token is REGENERATED ON EVERY RESTART."
         echo "      Pair now and the phone silently stops working the next time you"
         echo "      restart the dashboard — showing up much later as a 401."
-        NEW="$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 43)"
+        NEW="$(head -c 64 /dev/urandom | base64 | tr -d '/+=\n' | cut -c1-43)"
         echo
         echo "      Pin one by adding to $ENV_FILE:"
         echo "          HERMES_DASHBOARD_SESSION_TOKEN=$NEW"
