@@ -9,10 +9,15 @@ This repository holds **only** what a user or a store reviewer is ever shown:
 |---|---|
 | [`/privacy/`](https://aryaminus.github.io/perch-site/privacy/) | the privacy policy both app stores require |
 | [`/support/`](https://aryaminus.github.io/perch-site/support/) | how to get help, report content, report a vulnerability |
-| [`/pair.sh`](https://aryaminus.github.io/perch-site/pair.sh) · [`/enable-approvals.sh`](https://aryaminus.github.io/perch-site/enable-approvals.sh) | the two setup scripts the app tells you to download |
+| [`/pair.sh`](https://aryaminus.github.io/perch-site/pair.sh) | finds an address your phone can reach and prints the pairing QR |
+| [`/enable-approvals.sh`](https://aryaminus.github.io/perch-site/enable-approvals.sh) | makes your agent ask before it runs anything dangerous |
+| [`/ntfy-setup.sh`](https://aryaminus.github.io/perch-site/ntfy-setup.sh) | generates a notification topic and prints the config for your gateway |
+| [`/install-approval-bridge.sh`](https://aryaminus.github.io/perch-site/install-approval-bridge.sh) | installs the hook plugin that puts approvals on your phone |
+| [`/perch-approvals/`](https://aryaminus.github.io/perch-site/perch-approvals/plugin.yaml) | the gateway hook plugin `install-approval-bridge.sh` installs, as two readable files |
 
-It contains no application source, and it is not where issues go — the contact
-address is on the support page.
+It contains no application source, and its issue tracker is deliberately
+switched off — the contact address is on the support page, and a tracker nobody
+watches is worse than none.
 
 Every file here is **generated** from Perch's own repository by
 `tools/site/build-site.mjs` and pushed on change, so the published privacy

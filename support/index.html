@@ -56,10 +56,17 @@ which platform and version you are on — <em>Settings → About</em> has both.<
 the only channel, and it is read.</p>
 
 <h2>Report content</h2>
-<p>Every agent message in Perch carries a <strong>Report</strong> action. It
-composes an email to sunim.54@gmail.com, shows you the exact text first, and
-sends nothing on its own. The message is hidden on your device either way, and
-every hide is reversible from <em>Content &amp; safety</em>.</p>
+<p>Every agent message in Perch carries a <strong>Report</strong> action. Two
+things happen, and they are independent:</p>
+<ul>
+  <li><strong>Nothing is sent unless you send it.</strong> Perch composes an
+  email to sunim.54@gmail.com and shows you its exact text first. It runs no
+  server and transmits nothing itself, so the report reaches us only if you
+  press send in your own mail app.</li>
+  <li><strong>The message is hidden on your device immediately</strong>, whether
+  or not you send anything — and every hide is reversible from
+  <em>Content &amp; safety</em>.</li>
+</ul>
 
 <h2>Security</h2>
 <p>Report a vulnerability privately to
@@ -74,12 +81,27 @@ can read — both are described in the
 appear here.</p></div>
 
 <h2>Setup scripts</h2>
-<p>The app points at these two. They are plain shell, and reading one before
-running it is a reasonable thing to do:</p>
+<p>Everything Perch might ask you to run on the machine your agent lives on.
+They are plain shell, they print every change before making it, and the app
+tells you to download them rather than pipe them into a shell — because reading
+something before you run it on your own machine is reasonable, and a pipe takes
+that away from you.</p>
 <ul>
-  <li><a href="https://aryaminus.github.io/perch-site/pair.sh">pair.sh</a> — turns on your gateway's HTTP API and prints a pairing QR</li>
-  <li><a href="https://aryaminus.github.io/perch-site/enable-approvals.sh">enable-approvals.sh</a> — turns on command approvals</li>
+  <li><a href="https://aryaminus.github.io/perch-site/pair.sh">pair.sh</a> — finds an address your phone can reach and prints the pairing QR</li>
+  <li><a href="https://aryaminus.github.io/perch-site/enable-approvals.sh">enable-approvals.sh</a> — makes your agent ask before it runs anything dangerous</li>
+  <li><a href="https://aryaminus.github.io/perch-site/ntfy-setup.sh">ntfy-setup.sh</a> — generates a notification topic and prints the config for your gateway</li>
+  <li><a href="https://aryaminus.github.io/perch-site/install-approval-bridge.sh">install-approval-bridge.sh</a> — installs the hook plugin that puts approvals on your phone</li>
 </ul>
+<p>Each one is downloaded and run in two steps:</p>
+<pre><code>curl -fsSL https://aryaminus.github.io/perch-site/pair.sh -o pair.sh
+bash pair.sh</code></pre>
+<p><a href="https://aryaminus.github.io/perch-site/install-approval-bridge.sh">install-approval-bridge.sh</a>
+installs a small plugin into your gateway so an approval reaches your phone
+while Perch is closed. The plugin is two files, and you can read them first:
+<a href="https://aryaminus.github.io/perch-site/perch-approvals/plugin.yaml">plugin.yaml</a> and
+<a href="https://aryaminus.github.io/perch-site/perch-approvals/__init__.py">__init__.py</a>. It publishes
+one line to your ntfy topic — that a decision is waiting, and never the command
+itself.</p>
 <footer>
   Perch is an independent, open-source client for Hermes Agent. Not affiliated
   with, endorsed by, or supported by Nous Research.<br>

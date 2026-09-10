@@ -1,0 +1,11 @@
+name: perch-approvals
+version: 0.1.0
+description: >
+  Publishes "your agent needs a decision" to your own ntfy topic the moment an
+  approval is raised on an api_server run, so the notification reaches a phone
+  while Perch is closed. Observer-only: it never answers, never carries the
+  command text, and uses the same NTFY_* variables the ntfy platform adapter
+  and Perch's Notify screen already use.
+author: Perch (github.com/aryaminus/perch)
+hooks:
+  - pre_approval_request
