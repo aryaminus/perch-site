@@ -51,7 +51,7 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
 <p>This document is the third of three forms that must say the same thing. The other two are <code>docs/store/play-data-safety-answers.json</code> (Google Play Data Safety) and the iOS privacy manifest (<code>ios.privacyManifests</code> in <code>app.config.ts</code>) (Apple privacy manifest and nutrition labels). If you find this page disagreeing with either of them, the disagreement is the bug — please <a href="https://aryaminus.github.io/perch-site/support/">tell us</a>.</p>
 <h2>The short version</h2>
 <p><strong>Perch operates no servers.</strong> There is no relay, no device registry, no account, and no backend of ours anywhere in the path. Everything you type goes to the Hermes Agent <em>you</em> run, at an address <em>you</em> supply, using a key <em>you</em> hold. We never see it, because there is nowhere for us to see it from.</p>
-<p>The only data that ever leaves your phone to anyone but your own gateway is optional crash and performance diagnostics, and only if you switch them on.</p>
+<p>Two things leave your phone to anyone but your own gateway, and both are described in full below: <strong>optional</strong> crash diagnostics, only if you switch them on, and an <strong>update check</strong> that happens on every launch and cannot currently be switched off. Neither carries anything you type, and neither carries your gateway's address.</p>
 <h2>Who we are</h2>
 <p>Perch is maintained by the contributors to the Perch repository. Contact: <strong>sunim.54@gmail.com</strong>, or the <a href="https://aryaminus.github.io/perch-site/support/">support page</a> for anything that can be public.</p>
 <h2>What stays on your device</h2>
@@ -67,6 +67,11 @@ footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);
 <p>The device ID is <strong>not</strong> an IDFA or GAID, is generated locally, and rotates. It is never sent to any Hermes Agent.</p>
 <p><strong>What is scrubbed before anything is sent.</strong> Crash reports are rewritten on-device first: gateway URLs are redacted, because a self-hosted address is often a Tailscale name or a home IP and is therefore identifying, and <code>sendDefaultPii</code> is off. Your messages, your agent's output, file contents, commands and keys are never included.</p>
 <p><strong>Turning it off:</strong> <em>Content &amp; safety → Crash reports → off</em>, or uninstall. The toggle closes the reporting SDK the moment you tap it.</p>
+<h2>The update check, which is not optional</h2>
+<p>Perch is built with Expo, and every time the app cold-starts it asks Expo's update server (<code>u.expo.dev</code>) whether a newer JavaScript bundle exists. That request carries the app's version, release channel and platform, and a <strong>random installation identifier</strong> — a UUID generated on your device the first time the app runs and stored there.</p>
+<p>It carries <strong>nothing else</strong>: not your messages, not your gateway's address, not your key, and nothing that identifies you as a person. The identifier is not an advertising id, is not shared with advertisers, and is deleted when you uninstall the app.</p>
+<p><strong>This one has no off switch in the app today.</strong> It is how the app receives fixes without a store update. We would rather say so plainly than let the sentence above imply the diagnostics toggle covers everything that leaves the device.</p>
+<p><em>Added 2026-09-09. The summary at the top of this page previously said the only data leaving the phone was optional diagnostics. That was wrong: this check has always run, and a privacy policy that under-describes what leaves the device is the one kind of error that matters most here.</em> The toggle closes the reporting SDK the moment you tap it.</p>
 <p><em>Corrected 2026-09-09: this said "Settings → Diagnostics → Disable". There is no Diagnostics screen and no Disable control — the real ones are named above. A privacy policy that tells you how to stop collection has to name a control that exists.</em></p>
 <h2>What we never collect</h2>
 <p>Not on any setting, not by any code path:</p>
